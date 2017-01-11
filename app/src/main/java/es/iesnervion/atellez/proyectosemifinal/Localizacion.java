@@ -86,6 +86,10 @@ public class Localizacion extends AppCompatActivity implements GoogleApiClient.C
             //ESTO IRIA EN EL MENSAJE
             // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
             //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
+            String latitud = String.valueOf(mLocation.getLatitude());
+            String longitud = String.valueOf(mLocation.getLongitude());
+
+
         } else {
             Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
         }
