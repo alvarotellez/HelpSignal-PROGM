@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Salvation Game</string>
+    <string name="lblNomUsuario">Nombre usuario:</string>
+    <string name="lblContacto">Número de contacto:</string>
+</resources>
