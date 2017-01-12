@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.provider.Settings;
 import android.renderscript.Double2;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
     private LocationManager locationManager;
     //Para la activity
     Button btnLlamar;
+    private Switch localizacionActivada;
     String numIntroducido, nomUsuario;
     String longitud, latitud;
     String mensaje;
@@ -63,7 +66,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         //Localizamos el btn en el layout
         btnLlamar = (Button) findViewById(R.id.btnAyuda);
         btnLlamar.setOnClickListener(this);
-
+        localizacionActivada = (Switch) findViewById(R.id.localizacion);
 
         //Para la localizacion
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
@@ -73,12 +76,42 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
+        //Si el switch esta activado envia un mensaje con la ubicacion
+        //Si no esta activado realiza una llamada al numero de emergencias 112
+        if(localizacionActivada.isChecked()){
+            checkLocation();
+            String msg = "El usuario "+nomUsuario+" ha sufrido un accidente "+mensaje;
 
-        checkLocation();
-        String msg = "El usuario "+nomUsuario+" ha sufrido un accidente "+mensaje;
+            sendSMS(numIntroducido,msg+" "+mensaje);
 
-        sendSMS(numIntroducido,msg+" "+mensaje);
-
+            int permissionCheck = ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.CALL_PHONE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Mensaje", "No se tiene permiso para realizar llamadas telefónicas.");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 225);
+            } else {
+                Log.i("Mensaje", "Se tiene permiso!");
+                Intent callIntent = new Intent(Intent.ACTION_CALL,
+                        Uri.parse("tel:"+numIntroducido)); //
+                startActivity(callIntent);
+                Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
+                        Toast.LENGTH_LONG).show();
+            }
+        }else{
+            int permissionCheck = ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.CALL_PHONE);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Mensaje", "No se tiene permiso para realizar llamadas telefónicas.");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 225);
+            } else {
+                Log.i("Mensaje", "Se tiene permiso!");
+                Intent callIntent = new Intent(Intent.ACTION_CALL,
+                        Uri.parse("tel:112")); //
+                startActivity(callIntent);
+                Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + 112,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void sendSMS(String phoneNo, String msg) {
