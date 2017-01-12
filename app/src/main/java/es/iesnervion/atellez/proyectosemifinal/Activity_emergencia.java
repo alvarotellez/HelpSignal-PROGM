@@ -65,12 +65,9 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         btnLlamar.setOnClickListener(this);
 
 
-        //para la localizacion
-
+        //Para la localizacion
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
         checkLocation();
     }
 
