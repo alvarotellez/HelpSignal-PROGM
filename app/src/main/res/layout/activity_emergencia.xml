@@ -20,11 +20,13 @@
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:layout_marginTop="40dp"
-        android:textSize="25dp"
+
         android:text="Localización"
         android:layout_below="@+id/btnAyuda"
         android:layout_alignLeft="@+id/btnAyuda"
         android:layout_alignStart="@+id/btnAyuda"
+        android:scaleX="2"
+        android:scaleY="2"
         />
 
     <Button
