@@ -80,7 +80,6 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         checkLocation();
         String msg = "El usuario "+nomUsuario+" ha sufrido un accidente "+mensaje;
 
-        //sendSMS(numIntroducido,msg);
         sendSMS(numIntroducido,msg+" "+mensaje);
 
     }
@@ -101,7 +100,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
 
 
     @Override
-    public void onConnected( Bundle bundle) {
+    public void onConnected(Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=  PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             Log.i("Mensaje", "No se tiene permiso para obtener la localizacion.");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 225);
@@ -157,6 +156,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
                 +" , "+ Double.toString(location.getLongitude());
 
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        //Para usar las coordenadas para un mapa
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
     }
     private boolean checkLocation() {
