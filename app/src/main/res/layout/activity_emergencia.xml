@@ -19,8 +19,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:text="SOS"
-        android:textSize="40dp"
+        android:text="SOS!"
+        android:textSize="60dp"
         android:background="@drawable/btn_circle" />
 
     <!--Switch de activacion o desactivacion de la localizacion-->
