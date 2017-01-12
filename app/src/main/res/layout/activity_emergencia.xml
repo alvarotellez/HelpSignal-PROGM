@@ -12,26 +12,29 @@
 
 
     <!--Boton para mensaje o llamada-->
-    <Button
-        android:id="@+id/btnAyuda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:text="SOS!"
-        android:textSize="60dp"
-        android:background="@drawable/btn_circle" />
 
     <!--Switch de activacion o desactivacion de la localizacion-->
     <Switch
         android:id="@+id/localizacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="marquee"
         android:layout_marginTop="40dp"
+        android:textSize="25dp"
         android:text="Localización"
         android:layout_below="@+id/btnAyuda"
         android:layout_alignLeft="@+id/btnAyuda"
         android:layout_alignStart="@+id/btnAyuda"
         />
+
+    <Button
+        android:id="@+id/btnAyuda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:text="SOS!"
+        android:textSize="60dp"
+        android:background="@drawable/btn_circle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
