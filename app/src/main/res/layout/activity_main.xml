@@ -10,24 +10,51 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.iesnervion.atellez.proyectosemifinal.MainActivity">
 
+
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="75dp"
+        android:layout_width="150dp"
+        android:layout_height="125dp"
         android:src="@drawable/account"
         android:id="@+id/imageView"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/btnEntrar"
-        android:layout_alignEnd="@+id/btnEntrar" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
-    <!--Label del nombre del usuario-->
 
-    <!--EditText del nombre del usuario-->
-    <!--Deberia ser un correo electronico mejor que un nombre-->
 
-    <!--Label del numero de contacto del usuario-->
-    <!--EditText del numero de contacto del usuario-->
 
-    <!--Boton de entrar-->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/lblNomUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de usuario:"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/lblNumTelefono"
+        android:layout_alignParentStart="true">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/nomUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/lblNumTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Número de contacto:"
+        android:layout_above="@+id/btnEntrar"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="70dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/numContacto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"/>
+    </android.support.design.widget.TextInputLayout>
+
     <Button
         android:id="@+id/btnEntrar"
         android:layout_width="wrap_content"
@@ -35,44 +62,7 @@
         android:text="Entrar"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp" />
-
-    <EditText
-        android:id="@+id/numContacto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:maxLength="9"
-        android:textSize="20dp"
-        android:layout_above="@+id/btnEntrar"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:id="@+id/lblContacto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lblContacto"
-        android:textSize="20dp"
-        android:layout_above="@+id/numContacto"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="24dp" />
-
-    <EditText
-        android:id="@+id/nomUsuario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_above="@+id/lblContacto"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="51dp" />
-
-    <TextView
-        android:id="@+id/lblNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lblNomUsuario"
-        android:textSize="20dp"
-        android:layout_above="@+id/nomUsuario"
-        android:layout_alignParentStart="true" />
+        android:layout_marginBottom="50dp"
+        android:background="#66bb6a"
+        android:textColor="#FFF"/>
 </RelativeLayout>
