@@ -10,25 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.iesnervion.atellez.proyectosemifinal.Activity_emergencia">
 
-
-    <!--Boton para mensaje o llamada-->
-
-    <!--Switch de activacion o desactivacion de la localizacion-->
-    <Switch
-        android:id="@+id/localizacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:layout_marginTop="40dp"
-
-        android:text="Localización"
-        android:layout_below="@+id/btnAyuda"
-        android:layout_alignLeft="@+id/btnAyuda"
-        android:layout_alignStart="@+id/btnAyuda"
-        android:scaleX="2"
-        android:scaleY="2"
-        />
-
     <Button
         android:id="@+id/btnAyuda"
         android:layout_width="wrap_content"
@@ -38,5 +19,18 @@
         android:textSize="60dp"
         android:background="@drawable/btn_circle"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Switch
+        android:id="@+id/localizacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:layout_marginTop="34dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:text="Localización"
+        android:layout_below="@+id/btnAyuda"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

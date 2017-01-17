@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.Settings;
@@ -33,23 +35,15 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
-public class Activity_emergencia extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+public class Activity_emergencia extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
-    private static final String TAG="Activity_emergencia";
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLocation;
-    private LocationManager mLocationManager;
-    private LocationRequest mLocationRequest;
-    private com.google.android.gms.location.LocationListener listener;
-    private long UPDATE_INTERVAL = 2 * 1000;
-    private long FASTEST_INTERVAL = 2000;
-    private LocationManager locationManager;
-    //Para la activity
     Button btnLlamar;
     private Switch localizacionActivada;
     String numIntroducido, nomUsuario;
-    String longitud, latitud;
+    Double longitud, latitud;
     String mensaje;
+
+    LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,21 +62,17 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         btnLlamar.setOnClickListener(this);
         localizacionActivada = (Switch) findViewById(R.id.localizacion);
 
-        //Para la localizacion
-        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        checkLocation();
     }
 
     @Override
     public void onClick(View v) {
         //Si el switch esta activado envia un mensaje con la ubicacion
         //Si no esta activado realiza una llamada al numero de emergencias 112
-        if(localizacionActivada.isChecked()){
-            checkLocation();
-            String msg = "El usuario "+nomUsuario+" ha sufrido un accidente "+mensaje;
+        if (localizacionActivada.isChecked()) {
 
-            sendSMS(numIntroducido,msg+" "+mensaje);
+            String msg = "El usuario " + nomUsuario + " ha sufrido un accidente " + "Longitud:" +longitud +" Latitud: "+latitud;
+
+            sendSMS(numIntroducido, msg + " " + mensaje);
 
             int permissionCheck = ContextCompat.checkSelfPermission(
                     this, Manifest.permission.CALL_PHONE);
@@ -92,12 +82,12 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             } else {
                 Log.i("Mensaje", "Se tiene permiso!");
                 Intent callIntent = new Intent(Intent.ACTION_CALL,
-                        Uri.parse("tel:"+numIntroducido)); //
+                        Uri.parse("tel:" + numIntroducido)); //
                 startActivity(callIntent);
                 Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
                         Toast.LENGTH_LONG).show();
             }
-        }else{
+        } else {
             int permissionCheck = ContextCompat.checkSelfPermission(
                     this, Manifest.permission.CALL_PHONE);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -106,12 +96,36 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             } else {
                 Log.i("Mensaje", "Se tiene permiso!");
                 Intent callIntent = new Intent(Intent.ACTION_CALL,
-                        Uri.parse("tel:112")); //
+                        Uri.parse("tel:" + 112)); //
                 startActivity(callIntent);
-                Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + 112,
+                Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
                         Toast.LENGTH_LONG).show();
             }
         }
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria cri = new Criteria();
+        String provider = locationManager.getBestProvider(cri, false);
+
+        if (provider != null && !provider.equals("")) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Mensaje", "No se puede obtener la ubicación");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 225);
+            }
+            Location location = locationManager.getLastKnownLocation(provider);
+            locationManager.requestLocationUpdates(provider,2000,1,this);
+
+
+            if (location != null){
+                onLocationChanged(location);
+            }else{
+                Toast.makeText(getApplicationContext(),"Localización no encontrada", Toast.LENGTH_LONG).show();
+            }
+
+        }else{
+            Toast.makeText(getApplicationContext(),"Provider is null", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void sendSMS(String phoneNo, String msg) {
@@ -121,100 +135,48 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 225);
         } else {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("+34"+phoneNo, null, msg, null, null);
+            smsManager.sendTextMessage("+34" + phoneNo, null, msg, null, null);
             Toast.makeText(getApplicationContext(), "Mensaje enviado al numero " + phoneNo,
                     Toast.LENGTH_LONG).show();
         }
     }
 
 
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=  PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
-            Log.i("Mensaje", "No se tiene permiso para obtener la localizacion.");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 225);
-        }
-        
-        startLocationUpdates();
-
-        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-        if ((mLocation != null)){
-            startLocationUpdates();
-        }
-        if (mLocation != null){
-            //AQUI SACAMOS EL VALOR DE LA LONGITUD Y LA LATITUD PARA EL MENSAJE
-            longitud = String.valueOf(mLocation.getLongitude());
-            latitud = String.valueOf(mLocation.getLatitude());
-        }else{
-            Toast.makeText(this,"Localización no encotrada",Toast.LENGTH_SHORT).show();
-        }
-    }
-    //Este metodo realiza la actualizacion de la localizacion con el tiempo de refresco que le queramos poner
-    private void startLocationUpdates() {
-
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.i("Mensaje", "No se tiene permiso para obtener la localizacion.");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 225);
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                mLocationRequest, this);
-        Log.d("reque", "--->>>>");
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(TAG,"Conexión Suspendida");
-        mGoogleApiClient.connect();;
-    }
-
-    @Override
-    public void onConnectionFailed( ConnectionResult connectionResult) {
-        Log.i(TAG,"Error de conexion"+connectionResult.getErrorCode());
-    }
-
-    //AQUIIIIIIIIIII
-    //Esta comentado pq no nos interesa que se muestre un toast cada vez que se actualice la ubicacion
     @Override
     public void onLocationChanged(Location location) {
-        mensaje = "Se encuentra en la localización: "+ Double.toString(location.getLatitude())
-                +" , "+ Double.toString(location.getLongitude());
 
-        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
-        //Para usar las coordenadas para un mapa
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-    }
-    private boolean checkLocation() {
-        if(!isLocationEnabled()){
-            showAlert();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
         }
-        return isLocationEnabled();
+        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        //textView2.setText("Latitude"+latitud);
+        latitud = location.getLatitude();
+        //textView3.setText("Longitude"+location.getLongitude());
+        longitud = location.getLongitude();
+        if (location!=null){
+            //textView2.setText("Latitude"+latitud);
+            latitud = location.getLatitude();
+            //textView3.setText("Longitude"+location.getLongitude());
+
+            longitud = location.getLongitude();
+        }
     }
 
-    private void showAlert() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Activar Localizacion").setMessage("Su GPS esta desactivado, no podrá usar la aplicación").setPositiveButton("Configuracion de GPS", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(myIntent);
-            }
-        });
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
     }
 
-    private boolean isLocationEnabled(){
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    @Override
+    public void onProviderEnabled(String provider) {
 
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    @Override
+    public void onProviderDisabled(String provider) {
 
-
-
+    }
 }
+
+

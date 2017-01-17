@@ -20,9 +20,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp" />
 
-
-
-
     <android.support.design.widget.TextInputLayout
         android:id="@+id/lblNomUsuario"
         android:layout_width="match_parent"
@@ -47,12 +44,12 @@
         android:layout_above="@+id/btnEntrar"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="70dp">
-
         <android.support.design.widget.TextInputEditText
             android:id="@+id/numContacto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:maxLength="9"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
