@@ -2,7 +2,6 @@ package es.iesnervion.atellez.proyectosemifinal;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -10,40 +9,31 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.provider.Settings;
-import android.renderscript.Double2;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.query.internal.InFilter;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 
 public class Activity_emergencia extends AppCompatActivity implements View.OnClickListener, LocationListener {
 
     Button btnLlamar;
-    private Switch localizacionActivada;
-    String numIntroducido, nomUsuario;
-    Double longitud, latitud;
-    String mensaje;
 
+    private Switch localizacionActivada;
+    //Cadena de caracteres que el usuario nos ha introducido en la primera pantalla
+    String numIntroducido, nomUsuario;
+    //Double con la latitud y la longitud
+    Double latitud, longitud;
+    //String con la longitud y la latitud de la posicion actual convertida del double
+    String lat, longi;
     LocationManager locationManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +52,30 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         btnLlamar.setOnClickListener(this);
         localizacionActivada = (Switch) findViewById(R.id.localizacion);
 
+
+        //Necesario para la localizacion
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria cri = new Criteria();
+        String provider = locationManager.getBestProvider(cri, false);
+
+        if (provider != null && !provider.equals("")) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("Mensaje", "No se puede obtener la ubicación");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 225);
+            }
+            Location location = locationManager.getLastKnownLocation(provider);
+            locationManager.requestLocationUpdates(provider, 2000, 1, this);
+
+
+            if (location != null) {
+                onLocationChanged(location);
+            } else {
+                Toast.makeText(getApplicationContext(), "location not found", Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Provider is null", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -70,9 +84,10 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         //Si no esta activado realiza una llamada al numero de emergencias 112
         if (localizacionActivada.isChecked()) {
 
-            String msg = "El usuario " + nomUsuario + " ha sufrido un accidente " + "Longitud:" +longitud +" Latitud: "+latitud;
+            //Mensaje que enviamos
+            String msg = "El usuario " + nomUsuario + " ha sufrido un accidente. Localización:"+lat+", "+longi;
 
-            sendSMS(numIntroducido, msg + " " + mensaje);
+            sendSMS(numIntroducido, msg);
 
             int permissionCheck = ContextCompat.checkSelfPermission(
                     this, Manifest.permission.CALL_PHONE);
@@ -102,30 +117,6 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
                         Toast.LENGTH_LONG).show();
             }
         }
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria cri = new Criteria();
-        String provider = locationManager.getBestProvider(cri, false);
-
-        if (provider != null && !provider.equals("")) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.i("Mensaje", "No se puede obtener la ubicación");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 225);
-            }
-            Location location = locationManager.getLastKnownLocation(provider);
-            locationManager.requestLocationUpdates(provider,2000,1,this);
-
-
-            if (location != null){
-                onLocationChanged(location);
-            }else{
-                Toast.makeText(getApplicationContext(),"Localización no encontrada", Toast.LENGTH_LONG).show();
-            }
-
-        }else{
-            Toast.makeText(getApplicationContext(),"Provider is null", Toast.LENGTH_LONG).show();
-        }
-
     }
 
     public void sendSMS(String phoneNo, String msg) {
@@ -141,7 +132,6 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         }
     }
 
-
     @Override
     public void onLocationChanged(Location location) {
 
@@ -149,17 +139,12 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
 
             return;
         }
-        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        //textView2.setText("Latitude"+latitud);
-        latitud = location.getLatitude();
-        //textView3.setText("Longitude"+location.getLongitude());
-        longitud = location.getLongitude();
-        if (location!=null){
-            //textView2.setText("Latitude"+latitud);
-            latitud = location.getLatitude();
-            //textView3.setText("Longitude"+location.getLongitude());
 
+        if (location != null) {
+            latitud = location.getLatitude();
             longitud = location.getLongitude();
+            longi = String.valueOf(longitud);
+            lat = String.valueOf(latitud);
         }
     }
 
