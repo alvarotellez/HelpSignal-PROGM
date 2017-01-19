@@ -154,7 +154,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             }
         }
     }
-
+    //Falta esto
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
