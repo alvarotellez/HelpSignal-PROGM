@@ -113,7 +113,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
                 Intent callIntent = new Intent(Intent.ACTION_CALL,
                         Uri.parse("tel:" + 112)); //Llama al numero de emergencias
                 startActivity(callIntent);
-                Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
+                Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + 112,
                         Toast.LENGTH_LONG).show();
             }
         }

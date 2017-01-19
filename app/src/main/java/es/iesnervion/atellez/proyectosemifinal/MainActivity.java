@@ -30,12 +30,17 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast1 = Toast.makeText(getApplicationContext(), "No puedes dejar campos vacios", Toast.LENGTH_SHORT);
                     toast1.show();
                 } else {
-                    Intent intent = new Intent(v.getContext(), Activity_emergencia.class);
-                    //Le pasamos el nombre del usuario
-                    intent.putExtra("nomUsuario", editTextNombre.getText().toString());
-                    //Le pasamos el numero de telefono
-                    intent.putExtra("numTelefono", editTextNumero.getText().toString());
-                    startActivityForResult(intent, 0);
+                    if(editTextNumero.getText().length()<9){
+                        Toast toast1 = Toast.makeText(getApplicationContext(), "Introduzca un número teléfono válido", Toast.LENGTH_SHORT);
+                        toast1.show();
+                    }else{
+                        Intent intent = new Intent(v.getContext(), Activity_emergencia.class);
+                        //Le pasamos el nombre del usuario
+                        intent.putExtra("nomUsuario", editTextNombre.getText().toString());
+                        //Le pasamos el numero de telefono
+                        intent.putExtra("numTelefono", editTextNumero.getText().toString());
+                        startActivityForResult(intent, 0);
+                    }
                 }
             }
             });
