@@ -70,11 +70,11 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             if (location != null) {
                 onLocationChanged(location);
             } else {
-                Toast.makeText(getApplicationContext(), "location not found", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Localización no encontrada", Toast.LENGTH_LONG).show();
             }
 
         } else {
-            Toast.makeText(getApplicationContext(), "Provider is null", Toast.LENGTH_LONG).show();
+            Log.i("Mensaje", "Provider is null");
         }
     }
 
@@ -86,9 +86,9 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
 
             //Mensaje que enviamos
             String msg = "El usuario " + nomUsuario + " ha sufrido un accidente. Localización:"+lat+", "+longi;
-
             sendSMS(numIntroducido, msg);
 
+            //Comprobamos que se tienen los permisos para enviar sms y llamar
             int permissionCheck = ContextCompat.checkSelfPermission(
                     this, Manifest.permission.CALL_PHONE);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -97,7 +97,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             } else {
                 Log.i("Mensaje", "Se tiene permiso!");
                 Intent callIntent = new Intent(Intent.ACTION_CALL,
-                        Uri.parse("tel:" + numIntroducido)); //
+                        Uri.parse("tel:" + numIntroducido)); //Llama al numero que ha introducido el usuario
                 startActivity(callIntent);
                 Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
                         Toast.LENGTH_LONG).show();
@@ -111,7 +111,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             } else {
                 Log.i("Mensaje", "Se tiene permiso!");
                 Intent callIntent = new Intent(Intent.ACTION_CALL,
-                        Uri.parse("tel:" + 112)); //
+                        Uri.parse("tel:" + 112)); //Llama al numero de emergencias
                 startActivity(callIntent);
                 Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
                         Toast.LENGTH_LONG).show();
@@ -119,32 +119,39 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         }
     }
 
+    //Metodo para enviar el sms
     public void sendSMS(String phoneNo, String msg) {
+        //Comprueba el permiso
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             Log.i("Mensaje", "No se tiene permiso para realizar llamadas telefónicas.");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 225);
         } else {
+            //Envia sms
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage("+34" + phoneNo, null, msg, null, null);
             Toast.makeText(getApplicationContext(), "Mensaje enviado al numero " + phoneNo,
                     Toast.LENGTH_LONG).show();
         }
     }
-
+    //Metodos que hay que definir al implementar LocationListener
     @Override
     public void onLocationChanged(Location location) {
 
+        //Comprueba si tiene permiso y pide permiso si no lo tiene y si tiene permiso obtiene la longitud actual
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.i("Mensaje", "No se tiene permiso para obtener la localizacion");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 225);
+        }else{
+            if (location != null) {
+                //Sacamos la latitud y la longitud
+                latitud = location.getLatitude();
+                longitud = location.getLongitude();
 
-            return;
-        }
-
-        if (location != null) {
-            latitud = location.getLatitude();
-            longitud = location.getLongitude();
-            longi = String.valueOf(longitud);
-            lat = String.valueOf(latitud);
+                //Convertimos la latitud y longitud
+                longi = String.valueOf(longitud);
+                lat = String.valueOf(latitud);
+            }
         }
     }
 
