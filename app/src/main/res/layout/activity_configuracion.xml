@@ -10,8 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.iesnervion.atellez.proyectosemifinal.configuracion">
 
-    <TextView
+    <ImageView
+        android:id="@+id/img_config"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hola desde la configuración"/>
+        android:src="@drawable/configuracion"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        />
 </RelativeLayout>
