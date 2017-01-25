@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         btnEnviar = (Button) findViewById(R.id.btnEntrar);
 
         editTextNombre = (EditText) findViewById(R.id.nomUsuario);
