@@ -20,4 +20,48 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/lblNomUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de usuario:"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/lblNumTelefono"
+        android:layout_alignParentStart="true">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/nomUsuarioEditado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text=""/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/lblNumTelefono"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Número de contacto:"
+        android:layout_above="@+id/btnGuardar"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="70dp">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/numContactoEditado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="9"
+            android:text=""/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="#66bb6a"
+        android:textColor="#FFF"/>
 </RelativeLayout>
