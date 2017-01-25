@@ -80,24 +80,28 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         }
     }
 
-
+    //Para mostrar el menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
+    //Para saber que ha seleccionado el usuario
+    //Falta hacer que mande al usuario a la pestaña que seleccione
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                Intent miConfiguracion = new Intent(Activity_emergencia.this, configuracion.class);
+                Activity_emergencia.this.startActivity(miConfiguracion);
+                break;
+            case R.id.action_contact:
+                Intent miContacto = new Intent(Activity_emergencia.this, contacto.class);
+                Activity_emergencia.this.startActivity(miContacto);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
