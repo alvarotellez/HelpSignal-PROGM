@@ -3,6 +3,7 @@ package es.iesnervion.atellez.proyectosemifinal;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -42,12 +43,13 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_emergencia);
 
         //Obtenemos el nombre del usuario
-        Bundle bundle = getIntent().getExtras();
-        nomUsuario = bundle.getString("nomUsuario");
+        SharedPreferences prefNombreUsuario = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+        nomUsuario = prefNombreUsuario.getString("nomUsuario","");
+
 
         //Obtenemos el numero de telefono del usuario
-        Bundle bundle1 = getIntent().getExtras();
-        numIntroducido = bundle1.getString("numTelefono");
+        SharedPreferences prefNumContacto = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
+        numIntroducido = prefNumContacto.getString("numContacto","");
 
         //Localizamos el btn en el layout
         btnLlamar = (Button) findViewById(R.id.btnAyuda);

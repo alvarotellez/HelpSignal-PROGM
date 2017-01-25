@@ -1,6 +1,8 @@
 package es.iesnervion.atellez.proyectosemifinal;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,12 +37,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast toast1 = Toast.makeText(getApplicationContext(), "Introduzca un número teléfono válido", Toast.LENGTH_SHORT);
                         toast1.show();
                     }else{
+
+                        SharedPreferences misPref = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = misPref.edit();
+                        editor.putString("nomUsuario",editTextNombre.getText().toString());
+                        editor.putString("numContacto",editTextNumero.getText().toString());
+                        editor.commit();
                         Intent intent = new Intent(v.getContext(), Activity_emergencia.class);
-                        //Le pasamos el nombre del usuario
-                        intent.putExtra("nomUsuario", editTextNombre.getText().toString());
-                        //Le pasamos el numero de telefono
-                        intent.putExtra("numTelefono", editTextNumero.getText().toString());
-                        startActivityForResult(intent, 0);
+                        startActivity(intent);
                     }
                 }
             }
