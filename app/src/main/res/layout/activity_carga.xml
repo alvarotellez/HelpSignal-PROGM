@@ -8,8 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="es.iesnervion.atellez.proyectosemifinal.activity_carga"
-    android:background="#FFB8FDBB">
+    tools:context="es.iesnervion.atellez.proyectosemifinal.activity_carga">
 
     <ImageView
         android:layout_width="wrap_content"

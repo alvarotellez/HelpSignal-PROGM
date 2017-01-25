@@ -16,12 +16,12 @@ import android.widget.Toast;
 
 public class configuracion extends AppCompatActivity implements View.OnClickListener {
     private EditText etNomUsuario, etNumContacto;
-    private Button btnGuardar;
+    Button btnGuardar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion);
-
+        //Localizamos los editText en el Layout
         etNomUsuario = (EditText) findViewById(R.id.nomUsuarioEditado);
         etNumContacto = (EditText) findViewById(R.id.numContactoEditado);
 
@@ -34,26 +34,36 @@ public class configuracion extends AppCompatActivity implements View.OnClickList
         SharedPreferences prefNumContacto = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
         String numIntroducido = prefNumContacto.getString("numContacto","");
 
+        //Le ponemos a los editTest los valores que teniamos guardados en el SharedPreferences
         etNomUsuario.setText(nomUsuario);
         etNumContacto.setText(numIntroducido);
 
         btnGuardar = (Button) findViewById(R.id.btnGuardar);
         btnGuardar.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
-        //Guardamos en las sharedpreferences los nuevos datos introducidos por el usuario
-        SharedPreferences misPref = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = misPref.edit();
-        editor.putString("nomUsuario",etNomUsuario.getText().toString());
-        editor.putString("numContacto",etNumContacto.getText().toString());
-        editor.commit();
-        //Mostramos un mensaje informativo para el usuario
-        Toast.makeText(getApplicationContext(), "Cambios guardados", Toast.LENGTH_LONG).show();
-        //Lo llevamos de nuevo a la pantalla de socorro
-        Intent intent = new Intent(v.getContext(), Activity_emergencia.class);
-        startActivity(intent);
+        if (etNomUsuario.getText().toString().isEmpty() || etNumContacto.getText().toString().isEmpty()) {
+            Toast toast1 = Toast.makeText(getApplicationContext(), "No puedes dejar campos vacios", Toast.LENGTH_SHORT);
+            toast1.show();
+        } else {
+            if (etNumContacto.getText().length() < 9) {
+                Toast toast1 = Toast.makeText(getApplicationContext(), "Introduzca un número teléfono válido", Toast.LENGTH_SHORT);
+                toast1.show();
+            } else {
+                //Guardamos en las SharedPreferences los nuevos datos introducidos por el usuario
+                SharedPreferences misPref = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = misPref.edit();
+                editor.putString("nomUsuario", etNomUsuario.getText().toString());
+                editor.putString("numContacto", etNumContacto.getText().toString());
+                editor.commit();
+                //Mostramos un mensaje informativo para el usuario
+                Toast.makeText(getApplicationContext(), "Cambios guardados", Toast.LENGTH_LONG).show();
+                //Lo llevamos de nuevo a la pantalla de socorro
+                Intent intent = new Intent(v.getContext(), Activity_emergencia.class);
+                startActivity(intent);
+            }
+        }
     }
 }
