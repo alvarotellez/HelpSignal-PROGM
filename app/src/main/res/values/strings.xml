@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Salvation Game</string>
+    <string name="app_name">Help Signal</string>
     <string name="lblNomUsuario">Nombre usuario:</string>
     <string name="lblContacto">Número de contacto:</string>
     <string name="title_activity_configuracion">configuracion</string>
