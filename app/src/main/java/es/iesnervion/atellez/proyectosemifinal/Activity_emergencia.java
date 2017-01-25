@@ -91,8 +91,6 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
     //Falta hacer que mande al usuario a la pestaña que seleccione
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         switch (item.getItemId()){
             case R.id.action_settings:
                 Intent miConfiguracion = new Intent(Activity_emergencia.this, configuracion.class);
@@ -103,7 +101,6 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
                 Activity_emergencia.this.startActivity(miContacto);
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
