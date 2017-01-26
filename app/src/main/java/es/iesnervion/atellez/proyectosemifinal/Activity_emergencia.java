@@ -25,9 +25,7 @@ import android.widget.Toast;
 
 
 public class Activity_emergencia extends AppCompatActivity implements View.OnClickListener, LocationListener {
-
     Button btnLlamar;
-
     private Switch localizacionActivada;
     //Cadena de caracteres que el usuario nos ha introducido en la primera pantalla
     String numIntroducido, nomUsuario;
