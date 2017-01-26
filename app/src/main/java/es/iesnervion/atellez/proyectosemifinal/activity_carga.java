@@ -13,6 +13,8 @@ import android.widget.ImageView;
 
 public class activity_carga extends AppCompatActivity {
     private ImageView img_carga;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,4 +63,6 @@ public class activity_carga extends AppCompatActivity {
         super.onPause();
         finish();
     }
+
+
 }
