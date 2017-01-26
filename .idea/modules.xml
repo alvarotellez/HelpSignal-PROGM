@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/HelpSignal-PROGM.iml" filepath="$PROJECT_DIR$/HelpSignal-PROGM.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/salvationGame-PROGM.iml" filepath="$PROJECT_DIR$/salvationGame-PROGM.iml" />
     </modules>
   </component>
 </project>
