@@ -110,8 +110,9 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         //Si no esta activado realiza una llamada al numero de emergencias 112
         if (localizacionActivada.isChecked()) {
 
-            //Mensaje que enviamos
+            //Cadena que enviamos
             String msg = "El usuario " + nomUsuario + " ha sufrido un accidente. Localización:"+lat+", "+longi;
+            //Llamada al metodo para envaiar el sms
             sendSMS(numIntroducido, msg);
 
             //Comprobamos que se tienen los permisos para enviar sms y llamar
