@@ -31,11 +31,11 @@ public class activity_carga extends AppCompatActivity {
         movimiento.reset();
         img_carga.startAnimation(movimiento);
 
-        //Deja la pantalla parada durante 1 segundo para comprobar si existe el sharedPreferences con el nombre de usuario
+        //Deja la pantalla parada durante 3 segundos para comprobar si existe el sharedPreferences con el nombre de usuario
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(1000);
+                    sleep(3000);
                     SharedPreferences shf = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
                     String nomUsuario = shf.getString("nomUsuario",null);
                     String numContacto = shf.getString("numContacto",null);
