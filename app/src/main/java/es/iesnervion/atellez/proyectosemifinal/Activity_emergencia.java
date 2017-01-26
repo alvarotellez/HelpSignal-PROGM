@@ -57,7 +57,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
         localizacionActivada = (Switch) findViewById(R.id.localizacion);
 
 
-        //Necesario para la localizacion
+        //PARA LA LOCALIZACION ---> IMPLEMENTACION DEBAJO
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria cri = new Criteria();
         String provider = locationManager.getBestProvider(cri, false);
@@ -162,6 +162,9 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
                     Toast.LENGTH_LONG).show();
         }
     }
+
+
+    //PARA LA LOCALIZACION
     //Metodos que hay que definir al implementar LocationListener
     @Override
     public void onLocationChanged(Location location) {
