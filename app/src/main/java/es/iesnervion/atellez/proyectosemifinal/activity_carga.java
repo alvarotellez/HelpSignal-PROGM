@@ -18,10 +18,10 @@ public class activity_carga extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Quitamos las barras completas y de esa forma nos queda el layout a pantalla completa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_carga);
 
         //Hacemos girar la imagen de carga
@@ -30,12 +30,11 @@ public class activity_carga extends AppCompatActivity {
         movimiento = AnimationUtils.loadAnimation(this, R.anim.girar);
         movimiento.reset();
         img_carga.startAnimation(movimiento);
-
-        //Deja la pantalla parada durante 3 segundos para comprobar si existe el sharedPreferences con el nombre de usuario
+        //Deja la pantalla parada durante 2 segundos para comprobar si existe el sharedPreferences con el nombre de usuario
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(3000);
+                    sleep(2000);
                     SharedPreferences shf = getSharedPreferences("MisPreferencias",MODE_PRIVATE);
                     String nomUsuario = shf.getString("nomUsuario",null);
                     String numContacto = shf.getString("numContacto",null);
