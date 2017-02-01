@@ -63,6 +63,5 @@ public class activity_carga extends AppCompatActivity {
         super.onPause();
         finish();
     }
-
-
+    
 }
