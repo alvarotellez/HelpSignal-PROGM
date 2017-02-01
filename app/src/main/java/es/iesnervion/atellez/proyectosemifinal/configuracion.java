@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class configuracion extends AppCompatActivity implements View.OnClickListener {
     private EditText etNomUsuario, etNumContacto;
-    Button btnGuardar;
+    private Button btnGuardar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +44,12 @@ public class configuracion extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        //Si el usuario deja algun campo vacio muestra un toast de error y no deja avanzar al usuario
         if (etNomUsuario.getText().toString().isEmpty() || etNumContacto.getText().toString().isEmpty()) {
             Toast toast1 = Toast.makeText(getApplicationContext(), "No puedes dejar campos vacios", Toast.LENGTH_SHORT);
             toast1.show();
         } else {
+            //Si el tamanio del numero de telefono es menor de 9 muestra un toast de error y no deja avanzar al usuario
             if (etNumContacto.getText().length() < 9) {
                 Toast toast1 = Toast.makeText(getApplicationContext(), "Introduzca un número teléfono válido", Toast.LENGTH_SHORT);
                 toast1.show();
@@ -60,7 +62,7 @@ public class configuracion extends AppCompatActivity implements View.OnClickList
                 editor.commit();
                 //Mostramos un mensaje informativo para el usuario
                 Toast.makeText(getApplicationContext(), "Cambios guardados", Toast.LENGTH_LONG).show();
-                //Lo llevamos de nuevo a la pantalla de socorro
+                //Lo llevamos de nuevo a la pantalla de ayuda
                 Intent intent = new Intent(v.getContext(), Activity_emergencia.class);
                 startActivity(intent);
             }
