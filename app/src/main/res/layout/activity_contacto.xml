@@ -22,7 +22,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logoNervion"
+        android:src="@drawable/logonervion"
         android:layout_centerVertical="true"/>
     <TextView
         android:layout_width="wrap_content"
