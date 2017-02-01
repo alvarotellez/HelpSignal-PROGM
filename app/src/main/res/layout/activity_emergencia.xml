@@ -10,18 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.iesnervion.atellez.proyectosemifinal.Activity_emergencia">
 
-    <Button
-        android:id="@+id/btnAyuda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:text="SOS!"
-        android:textSize="60dp"
-        android:background="@drawable/btn_circle"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        />
 
+    <!--Switch para activar la localizacion-->
     <Switch
         android:id="@+id/localizacion"
         android:layout_width="wrap_content"
@@ -30,7 +20,19 @@
         android:layout_marginTop="34dp"
         android:scaleX="2"
         android:scaleY="2"
-        android:text="Localización"
+        android:text="@string/swLocalizacion"
         android:layout_below="@+id/btnAyuda"
         android:layout_centerHorizontal="true" />
+    <!--Boton que pide ayuda-->
+    <Button
+        android:id="@+id/btnAyuda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:text="@string/btnHelp"
+        android:textSize="60dp"
+        android:background="@drawable/btn_circle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

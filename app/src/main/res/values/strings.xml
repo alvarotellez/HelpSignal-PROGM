@@ -12,4 +12,8 @@
     <!--String activity_configuracion-->
     <string name="title_activity_configuracion">Configuración</string>
     <string name="btnActualizar">Guardar</string>
+
+    <!--String activity_emergencia-->
+    <string name="btnHelp">SOS!</string>
+    <string name="swLocalizacion">Localización</string>
 </resources>
