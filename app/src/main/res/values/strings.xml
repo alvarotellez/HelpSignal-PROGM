@@ -2,7 +2,14 @@
     <string name="app_name">Help Signal</string>
     <string name="lblNomUsuario">Nombre usuario:</string>
     <string name="lblContacto">Número de contacto:</string>
-    <string name="title_activity_configuracion">configuracion</string>
+
+
+    <!--String activity_contacto-->
     <string name="txtContacto">Aplicación desarrollada en la asignatura de Programación Móviles en el Ciclo de Desarrollo de Aplicaciones Multiplataforma para el Curso 2016/17</string>
     <string name="txtCopy">© Álvaro Téllez Hidalgo - 2017</string>
+
+
+    <!--String activity_configuracion-->
+    <string name="title_activity_configuracion">Configuración</string>
+    <string name="btnActualizar">Guardar</string>
 </resources>

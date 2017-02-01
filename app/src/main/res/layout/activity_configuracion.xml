@@ -10,8 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="es.iesnervion.atellez.proyectosemifinal.configuracion">
 
-    <!--Falta meter la imagen-->
 
+    <!--Imagen de la pantalla configuracion-->
     <ImageView
         android:id="@+id/img_config"
         android:layout_width="wrap_content"
@@ -20,12 +20,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         />
-
+    <!--EditText del nombre de usuario-->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/lblNomUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de usuario:"
+        android:hint="@string/lblNomUsuario"
         android:layout_marginBottom="30dp"
         android:layout_above="@+id/lblNumTelefono"
         android:layout_alignParentStart="true">
@@ -36,12 +36,12 @@
             android:inputType="text"
             android:text=""/>
     </android.support.design.widget.TextInputLayout>
-
+    <!--EditText del numero de telefono-->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/lblNumTelefono"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Número de contacto:"
+        android:hint="@string/lblContacto"
         android:layout_above="@+id/btnGuardar"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="70dp">
@@ -53,12 +53,12 @@
             android:maxLength="9"
             android:text=""/>
     </android.support.design.widget.TextInputLayout>
-
+    <!--Boton de guardado de la actualizacion de los datos-->
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Guardar"
+        android:text="@string/btnActualizar"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
