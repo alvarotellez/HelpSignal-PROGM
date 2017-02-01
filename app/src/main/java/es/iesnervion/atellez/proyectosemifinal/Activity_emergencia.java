@@ -107,9 +107,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         //Si el switch esta activado envia un mensaje con la ubicacion
-
         if (localizacionActivada.isChecked()) {
-
             //Cadena que enviamos
             String msg = "El usuario " + nomUsuario + " ha sufrido un accidente. Localización:"+lat+", "+longi;
             //Llamada al metodo para enviar el sms
