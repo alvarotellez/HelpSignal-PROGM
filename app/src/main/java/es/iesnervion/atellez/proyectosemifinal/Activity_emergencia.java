@@ -25,15 +25,15 @@ import android.widget.Toast;
 
 
 public class Activity_emergencia extends AppCompatActivity implements View.OnClickListener, LocationListener {
-    Button btnLlamar;
+    private Button btnLlamar;
     private Switch localizacionActivada;
     //Cadena de caracteres que el usuario nos ha introducido en la primera pantalla
-    String numIntroducido, nomUsuario;
+    private String numIntroducido, nomUsuario;
     //Double con la latitud y la longitud
-    Double latitud, longitud;
+    private Double latitud, longitud;
     //String con la longitud y la latitud de la posicion actual convertida del double
-    String lat, longi;
-    LocationManager locationManager;
+    private String lat, longi;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +107,16 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         //Si el switch esta activado envia un mensaje con la ubicacion
-        //Si no esta activado realiza una llamada al numero de emergencias 112
+
         if (localizacionActivada.isChecked()) {
 
             //Cadena que enviamos
             String msg = "El usuario " + nomUsuario + " ha sufrido un accidente. Localización:"+lat+", "+longi;
-            //Llamada al metodo para envaiar el sms
+            //Llamada al metodo para enviar el sms
             sendSMS(numIntroducido, msg);
 
             //Comprobamos que se tienen los permisos para enviar sms y llamar
+            //Si no tiene permiso sale una ventana emergente que le pide permiso al usuario
             int permissionCheck = ContextCompat.checkSelfPermission(
                     this, Manifest.permission.CALL_PHONE);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
@@ -129,6 +130,7 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
                 Toast.makeText(getApplicationContext(), "Realizando llamada al numero " + numIntroducido,
                         Toast.LENGTH_LONG).show();
             }
+        //Si no esta activado realiza una llamada al numero de emergencias 112
         } else {
             int permissionCheck = ContextCompat.checkSelfPermission(
                     this, Manifest.permission.CALL_PHONE);
@@ -184,20 +186,20 @@ public class Activity_emergencia extends AppCompatActivity implements View.OnCli
             }
         }
     }
-    //Falta esto
+    //Metodos que se sobreescriben para la localizacion
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
-
+    //Nos muestra un mensaje en la consola de que el provider esta activado
     @Override
     public void onProviderEnabled(String provider) {
-
+        Log.i("Activado","Provider activado");
     }
-
+    //Nos muestra un mensaje en la consola de que el provider esta desactivado
     @Override
     public void onProviderDisabled(String provider) {
-
+        Log.i("Desactivado","Provider desactivado");
     }
 }
 
