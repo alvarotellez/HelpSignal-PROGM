@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--El primer activity que abre es el de carga, donde comprueba si el usuario esta registrado-->
+        <!--Le decimos que sea solo de orientacion vertical-->
         <activity android:name=".activity_carga"
             android:theme="@style/AppTheme.Fullscreen"
             android:configChanges="orientation"
