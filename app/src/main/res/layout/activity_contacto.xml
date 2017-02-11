@@ -17,13 +17,8 @@
         android:textSize="16dp"
         android:textAlignment="center"
         android:layout_marginTop="20dp"
-        />
+        android:id="@+id/textView2" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logonervion"
-        android:layout_centerVertical="true"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,4 +27,47 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
         android:id="@+id/textView" />
+
+    <Button
+        android:id="@+id/btnGithub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/github"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/textView2"
+        android:text="Github"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/facebook"
+        android:text="Facebook"
+        android:layout_marginEnd="50dp"
+        android:id="@+id/btnFacebook"
+        android:layout_alignBaseline="@+id/btnGithub"
+        android:layout_alignBottom="@+id/btnGithub"
+        android:layout_alignParentEnd="true"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/twitter"
+        android:text="Twitter"
+        android:layout_below="@+id/btnGithub"
+        android:layout_alignStart="@+id/btnGithub"
+        android:layout_marginTop="40dp"
+        android:id="@+id/btnTwitter" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/linkedin"
+        android:text="Linkedin"
+        android:layout_alignBaseline="@+id/btnTwitter"
+        android:layout_alignBottom="@+id/btnTwitter"
+        android:layout_alignEnd="@+id/btnFacebook"
+        android:id="@+id/btnLinkedin" />
 </RelativeLayout>
