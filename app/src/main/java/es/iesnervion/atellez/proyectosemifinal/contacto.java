@@ -26,7 +26,7 @@ public class contacto extends AppCompatActivity implements View.OnClickListener 
         btnFacebook.setOnClickListener(this);
         btnGithub.setOnClickListener(this);
     }
-
+    //Metodos onClick de cada boton
     @Override
     public void onClick(View v) {
 
