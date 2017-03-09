@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         editTextNombre = (EditText) findViewById(R.id.nomUsuario);
         editTextNumero = (EditText) findViewById(R.id.numContacto);
 
+        //Es el boton de registro despues del usuario completar los campos de registro
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
